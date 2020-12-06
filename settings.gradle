@@ -1,0 +1,2 @@
+rootProject.name='AndroidPHPmySQL'
+include ':app'

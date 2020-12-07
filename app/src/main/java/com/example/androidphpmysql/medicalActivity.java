@@ -51,7 +51,7 @@ public class medicalActivity extends AppCompatActivity implements View.OnClickLi
 ////            Toast.makeText(getApplicationContext(), "medical uploaded already", Toast.LENGTH_SHORT).show();
 //            finish();
 //            //this will then start the activity
-//            startActivity(new Intent(this, LoginActivity.class));
+//            startActivity(new Intent(this, ProfileActivity.class));
 //        }
 
 
@@ -129,6 +129,7 @@ public class medicalActivity extends AppCompatActivity implements View.OnClickLi
 
                     }
                 }) {
+
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();

@@ -19,6 +19,7 @@ public class SharedPrefManager {
     private static final String KEY_USERNAME = "username";
     private static final String KEY_USER_EMAIL = "useremail";
     private static final String KEY_USER_ID = "userid";
+    private static final String KEY_MEDICAL_ID = "medicalid";
 
 
     private SharedPrefManager(Context context) {
@@ -79,13 +80,25 @@ public class SharedPrefManager {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getInt(KEY_USER_ID, 0);
     }
-
-    public boolean isUploaded() {
-        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-    //this function will tell if the user id is entered to the medical table or not
-        if (sharedPreferences.getString(KEY_USER_ID, null) != null) {
-            return true;
-        }
-        return false;
-    }
 }
+//    //to see if the medical history is uploaded
+//    public boolean registerMedical(int id) {
+//        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE); //only this application can access this shared preference
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putInt(KEY_MEDICAL_ID, id);
+//        editor.apply();
+//        if (sharedPreferences.getInt(KEY_USER_ID, 0) = KEY_MEDICAL_ID);
+//        return true;
+//    }
+
+
+
+//    public boolean isUploaded() {
+//        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+//    //this function will tell if the user id is entered to the medical table or not
+//        if (sharedPreferences.getInt(KEY_USER_ID, 0) != 0) {
+//            return true;
+//        }
+//        return false;
+//    }
+//}

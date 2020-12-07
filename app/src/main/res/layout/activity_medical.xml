@@ -74,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"/>
             <EditText
+                android:inputType="date"
                 android:id="@+id/editDOB"
                 android:hint="YYYY-MM-DD"
                 android:layout_width="0dp"
@@ -91,6 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"/>
             <EditText
+                android:inputType="number"
                 android:id="@+id/editWeight"
                 android:hint="Kg"
                 android:layout_width="0dp"
@@ -108,6 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"/>
             <EditText
+                android:inputType="number"
                 android:id="@+id/editAlcohol"
                 android:hint="Units per week"
                 android:layout_width="0dp"
@@ -125,6 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"/>
             <EditText
+                android:inputType="number"
                 android:id="@+id/editSmoking"
                 android:hint="Cigarettes per week"
                 android:layout_width="0dp"

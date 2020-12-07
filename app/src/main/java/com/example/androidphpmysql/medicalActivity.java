@@ -1,10 +1,13 @@
 package com.example.androidphpmysql;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -148,12 +151,41 @@ public class medicalActivity extends AppCompatActivity implements View.OnClickLi
         };
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
     }
-
         @Override
     public void onClick(View v) {
     if (v == buttonUpload)
     {
         registerMedical();
     }
+    }
+    //override method for logout
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //code to include menu item
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+    //this method is for when the logout option is selected from the menu
+    //the method will log you out
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.menuLogout: // this take the menu id from the menu.xml
+                SharedPrefManager.getInstance(this).logout();//this calls the logout method created in shared preference manager
+                finish();
+                startActivity(new Intent(this, LoginActivity.class));//when logged out it will start the LoginActivity
+                break;
+            case R.id.menuUpload:
+//            Toast.makeText(this,"You clicked settings", Toast.LENGTH_LONG).show();
+                finish();
+                startActivity(new Intent(this, medicalActivity.class));
+                break;
+            case R.id.menuProfile:
+//            Toast.makeText(this,"You clicked settings", Toast.LENGTH_LONG).show();
+                finish();
+                startActivity(new Intent(this, ProfileActivity.class));
+                break;
+        }
+        return true;
     }
 }

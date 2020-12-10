@@ -186,7 +186,7 @@
 
         <Button
             android:text="Update"
-            android:id="@+id/buttonUpload"
+            android:id="@+id/buttonUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

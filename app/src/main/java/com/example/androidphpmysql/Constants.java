@@ -8,5 +8,7 @@ public class Constants {
     public static final String URL_LOGIN = ROOT_URL+"userLogin.php";
     public static final String URL_MEDICAL = ROOT_URL+"registerMedical.php";
     public static final String URL_MEDICAL_RETRIEVE = ROOT_URL+"retrieveMedical.php";
+    public static final String URL_MEDICAL_UPDATE = ROOT_URL+"updateMedical.php";
+
 
 }

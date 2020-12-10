@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -23,13 +24,12 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UpdateMedical extends AppCompatActivity {
+public class UpdateMedical extends AppCompatActivity implements View.OnClickListener{
     //defining the text views
     private TextView textViewPatientID,textviewGender, textviewDOB;
     private EditText  editWeight, editAlcohol, editSmoking, editUnderlyingConditions, editAllergies, editMedication;
     private Button buttonUpdate;
     private ProgressDialog progressDialog;
-    String role = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +56,9 @@ public class UpdateMedical extends AppCompatActivity {
         editAllergies = (EditText) findViewById(R.id.editAllergiesUpdate);
         editMedication = (EditText) findViewById(R.id.editMedicationUpdate);
 
+        buttonUpdate = (Button) findViewById(R.id.buttonUpdate);
+        progressDialog = new ProgressDialog(this);
+        buttonUpdate.setOnClickListener(this);
         //must create a constants class for the url path to the php file that will update the database record.
         //e.g select ... from ... where id=id
 
@@ -109,10 +112,75 @@ public class UpdateMedical extends AppCompatActivity {
                 RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
 //received help from this video -> https://www.youtube.com/watch?v=y2xtLqP8dSQ
     }
-//    private void updateMedical(){
-//        final int patientid = Integer.parseInt(textViewPatientID.getText().toString().trim());
-//        final String gender = textViewGender.getText().toString().trim();
-//        final String age = textViewDOB.getText().toString().trim();
-//
-//    }
+        private void updateMedical(){
+            final int patientid = Integer.parseInt(textViewPatientID.getText().toString().trim());
+            final String age = textviewDOB.getText().toString().trim();
+            final String gender = textviewGender.getText().toString().trim();
+            final String weight = editWeight.getText().toString().trim();
+            final String alcohol = editAlcohol.getText().toString().trim();
+            final String smoking = editSmoking.getText().toString().trim();
+            final String underlyingcondition = editUnderlyingConditions.getText().toString().trim();
+            final String allergy = editAllergies.getText().toString().trim();
+            final String medication = editMedication.getText().toString().trim();
+
+            progressDialog.setMessage("Updating Medical...");
+            progressDialog.show();
+
+            StringRequest stringRequest = new StringRequest(
+                    Request.Method.POST,
+                    Constants.URL_MEDICAL_UPDATE,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            progressDialog.dismiss();
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            progressDialog.hide();
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    error.getMessage(),
+                                    Toast.LENGTH_SHORT
+                            ).show();
+
+                        }
+                    }) {
+
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("patientid", String.valueOf(patientid));
+                    params.put("gender", gender);
+                    params.put("age", age);
+                    params.put("weight", weight);
+                    params.put("alcohol", alcohol);
+                    params.put("smoking", smoking);
+                    params.put("underlyingcondition", underlyingcondition);
+                    params.put("allergy", allergy);
+                    params.put("medication", medication);
+
+                    return params;
+                }
+            };
+            RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+        }
+
+    @Override
+    public void onClick(View v) {
+        if (v == buttonUpdate)
+        {
+            updateMedical();
+        }
+    }
+
+
 }

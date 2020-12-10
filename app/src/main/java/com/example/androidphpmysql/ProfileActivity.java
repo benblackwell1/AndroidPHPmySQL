@@ -58,7 +58,11 @@ public class ProfileActivity extends AppCompatActivity {
             finish();
             startActivity(new Intent(this, medicalActivity.class));
             break;
-
+        case R.id.menuUpdate:
+//            Toast.makeText(this,"You clicked settings", Toast.LENGTH_LONG).show();
+            finish();
+            startActivity(new Intent(this, UpdateMedical.class));
+            break;
     }
     return true;
     }

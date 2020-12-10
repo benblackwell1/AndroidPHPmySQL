@@ -6,7 +6,9 @@
     <item
         android:id="@+id/menuUpload"
         android:title="Upload Medical History"/>
-
+    <item
+        android:id="@+id/menuUpdate"
+        android:title="Update Medical History"/>
     <item
         android:id="@+id/menuLogout"
         android:title="Logout"/>

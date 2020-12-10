@@ -114,6 +114,22 @@ public class medicalActivity extends AppCompatActivity implements View.OnClickLi
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+//                            if(!jsonObject.getBoolean("error")){
+//                                SharedPrefManager.getInstance(getApplicationContext())
+//                                        .registerMedical(
+//                                                jsonObject.getInt("patientid"),
+//                                                jsonObject.getString("gender"),
+//                                                jsonObject.getString("age")
+//                                        );
+//                                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+//                                finish();
+//                            }else{
+//                                Toast.makeText(
+//                                        getApplicationContext(),
+//                                        jsonObject.getString("message"),
+//                                        Toast.LENGTH_LONG
+//                                ).show();
+//                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

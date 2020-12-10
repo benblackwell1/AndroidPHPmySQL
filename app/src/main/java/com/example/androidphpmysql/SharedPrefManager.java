@@ -20,6 +20,8 @@ public class SharedPrefManager {
     private static final String KEY_USER_EMAIL = "useremail";
     private static final String KEY_USER_ID = "userid";
     private static final String KEY_MEDICAL_ID = "medicalid";
+    private static final String KEY_MEDICAL_AGE = "medicalage";
+    private static final String KEY_MEDICAL_GENDER = "medicalgender";
 
 
     private SharedPrefManager(Context context) {
@@ -80,17 +82,26 @@ public class SharedPrefManager {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getInt(KEY_USER_ID, 0);
     }
-}
-//    //to see if the medical history is uploaded
-//    public boolean registerMedical(int id) {
-//        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE); //only this application can access this shared preference
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.putInt(KEY_MEDICAL_ID, id);
-//        editor.apply();
-//        if (sharedPreferences.getInt(KEY_USER_ID, 0) = KEY_MEDICAL_ID);
-//        return true;
-//    }
 
+    //to see if the medical history is uploaded
+    public boolean registerMedical(String gender, String age) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE); //only this application can access this shared preference
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putInt(KEY_MEDICAL_ID, patientid);
+        editor.putString(KEY_MEDICAL_AGE, age);
+        editor.putString(KEY_MEDICAL_GENDER, gender);
+        editor.apply();
+        return true;
+    }
+    public String getUserDOB() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_MEDICAL_AGE, null);
+    }
+    public String getUserGender() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_MEDICAL_GENDER, null);
+    }
+}
 
 
 //    public boolean isUploaded() {

@@ -191,10 +191,10 @@ public class medicalActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
                 startActivity(new Intent(this, LoginActivity.class));//when logged out it will start the LoginActivity
                 break;
-            case R.id.menuUpload:
+            case R.id.menuUpdate:
 //            Toast.makeText(this,"You clicked settings", Toast.LENGTH_LONG).show();
                 finish();
-                startActivity(new Intent(this, medicalActivity.class));
+                startActivity(new Intent(this, UpdateMedical.class));
                 break;
             case R.id.menuProfile:
 //            Toast.makeText(this,"You clicked settings", Toast.LENGTH_LONG).show();

@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private EditText editTextUsername, editTextPassword, editTextEmail;
     private Button buttonRegister;
+    private Button buttonAdminTest;
     private ProgressDialog progressDialog;
 
     private TextView textViewLogin;
@@ -51,10 +52,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textViewLogin = (TextView) findViewById(R.id.textViewLogin);
 
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
+        buttonAdminTest = (Button) findViewById(R.id.buttonAdminTest);
+
 
         progressDialog = new ProgressDialog(this);
 
         buttonRegister.setOnClickListener(this);
+        buttonAdminTest.setOnClickListener(this);
         textViewLogin.setOnClickListener(this);
     }
 
@@ -107,5 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             registerUser();
         if(view == textViewLogin)
             startActivity(new Intent(this, LoginActivity.class));
+        if(view == buttonAdminTest)
+            startActivity(new Intent(this, AdminActivity.class));
     }
 }

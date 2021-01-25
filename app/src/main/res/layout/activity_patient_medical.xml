@@ -7,23 +7,35 @@
     tools:context=".PatientMedicalActivity">
 
     <LinearLayout
-        android:layout_centerVertical="true"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     <TextView
         android:text="USER ID"
-        android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:id="@+id/textViewUserID"
         android:text="USER NAME"
-        android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ListView
+                android:id="@+id/listViewPatients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below = "@id/linearLayout"/>
+        </LinearLayout>
 
     </LinearLayout>
 </RelativeLayout>

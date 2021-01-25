@@ -39,7 +39,7 @@ public class AdminActivity extends AppCompatActivity {
      ListView listView;
      ProgressBar progressBar;
 
-     //will use this lsit to display in the listview
+     //will use this list to display in the listview
     List<Patient> patientList;
 
     @Override

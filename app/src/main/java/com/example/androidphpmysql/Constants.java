@@ -10,6 +10,10 @@ public class Constants {
     public static final String URL_MEDICAL_RETRIEVE = ROOT_URL+"retrieveMedical.php";
     public static final String URL_MEDICAL_UPDATE = ROOT_URL+"updateMedical.php";
     public static final String URL_PATIENTS_RETRIEVE = ROOT_URL+"retrievePatients.php";
+    public static final String URL_PATIENTS_MEDICAL_RETRIEVE = ROOT_URL+"retrieveListofMedicals.php";
+    public static final String URL_ADD_COMMENT = ROOT_URL+"addComment.php";
+
+
 
 
 }

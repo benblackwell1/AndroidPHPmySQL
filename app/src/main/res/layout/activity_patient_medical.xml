@@ -18,9 +18,31 @@
     <TextView
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:id="@+id/textViewUserID"
-        android:text="USER NAME"
+        android:text="USER ID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:id="@+id/textViewName"
+            android:text="NAME"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="Address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:id="@+id/textViewAddress"
+            android:text="Address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -30,11 +52,45 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+        <TextView
+            android:text="Medicals"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ListView
+            android:id="@+id/listViewPatients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below = "@id/linearLayout"/>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_below = "@id/linearLayout"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <Button
+                android:id="@+id/buttonAddComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Comment"/>
+
+            <TextView
+                android:text="Dentist Comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
             <ListView
-                android:id="@+id/listViewPatients"
+                android:id="@+id/listViewComments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below = "@id/linearLayout"/>
+                android:layout_below = "@id/linearLayout2"/>
         </LinearLayout>
 
     </LinearLayout>

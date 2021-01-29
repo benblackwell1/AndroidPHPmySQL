@@ -6,9 +6,9 @@ class Medical {
     private int id;
     private int patientid;
     private String gender, age, weight, alcohol, smoking, underlyingcondition, allergy, medication;
-    private Date timestamp;
+    private String timestamp;
 
-    public Medical(int id, int patientid, String gender, String age, String weight, String alcohol, String smoking, String underlyingcondition, String allergy, String medication, Date timestamp){
+    public Medical(int id, int patientid, String gender, String age, String weight, String alcohol, String smoking, String underlyingcondition, String allergy, String medication, String timestamp){
         this.id = id;
         this.patientid = patientid;
         this.gender = gender;
@@ -18,10 +18,9 @@ class Medical {
         this.smoking = smoking;
         this.underlyingcondition = underlyingcondition;
         this.allergy = allergy;
+        this.medication = medication;
         this.timestamp = timestamp;
-
     }
-
     public int getId() {
         return id;
     }
@@ -62,7 +61,7 @@ class Medical {
         return medication;
     }
 
-    public Date getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 }

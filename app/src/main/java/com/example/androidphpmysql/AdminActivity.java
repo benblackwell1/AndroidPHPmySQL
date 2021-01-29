@@ -42,6 +42,8 @@ public class AdminActivity extends AppCompatActivity {
      //will use this list to display in the listview
     List<Patient> patientList;
 
+    //code to aid me recieved from -> https://www.simplifiedcoding.net/android-mysql-tutorial-to-perform-basic-crud-operation/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +55,13 @@ public class AdminActivity extends AppCompatActivity {
 
         readPatients();
     }
-
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
     class PatientAdapter extends ArrayAdapter<Patient> {
 
         //our patient list
@@ -84,9 +92,23 @@ public class AdminActivity extends AppCompatActivity {
                @Override
                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                    Patient obj = getItem(position);
+                   int patientid = obj.getId();
                    int userid = obj.getUserid();
+                   String fname = obj.getFname();
+                   String lname = obj.getLname();
+                   String street = obj.getStreet();
+                   String city = obj.getCity();
+                   String zip = obj.getZip();
                    Intent intent = new Intent(AdminActivity.this, PatientMedicalActivity.class);
-                   intent.putExtra("Userid", String.valueOf(userid));
+                   Bundle extras = new Bundle();
+                   extras.putString("patientid", String.valueOf(patientid));
+                   extras.putString("userid", String.valueOf(userid));
+                   extras.putString("fname", fname);
+                   extras.putString("lname", lname);
+                   extras.putString("street", street);
+                   extras.putString("city", city);
+                   extras.putString("zip", zip);
+                   intent.putExtras(extras);
                    startActivity(intent);
                }
            });

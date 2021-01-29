@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView textViewLogin;
 
+    //code for this login has been aided with the help of this video series. I has refactored it to fit my project -> https://www.youtube.com/playlist?list=PLk7v1Z2rk4hjQaV062aE_CW68xgXdYFpV
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

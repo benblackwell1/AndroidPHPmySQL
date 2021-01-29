@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SelectedMedicalActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:text="MEDICAL ID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:id="@+id/textViewMedicalID"
+        android:text="MEDICAL ID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="Gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:id="@+id/textViewGender"
+            android:text="Gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:text="Age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:id="@+id/textViewAge"
+            android:text="Age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:text="Weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:id="@+id/textViewWeight"
+            android:text="Weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:text="Alcohol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:id="@+id/textViewAlcohol"
+            android:text="Alcohol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:text="Smoking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:id="@+id/textViewSmoking"
+            android:text="Smoking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:text="Underlying Condition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:id="@+id/textViewUnderlyingCondition"
+            android:text="Underlying Condition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:text="Allergy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:id="@+id/textViewAllergy"
+            android:text="Allergy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:text="Medication"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:id="@+id/textViewMedication"
+            android:text="Medication"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -41,9 +41,11 @@ public class PatientMedicalActivity extends AppCompatActivity implements Comment
     //declaring button for pop up dialog to caputre the comment made by dentist
     private Button buttonAddComment;
     ListView listViewComment;
+    List<Comment> commentList = new ArrayList<>();
 
-
+    //listview for medicals
     ListView listView;
+
 
     //will use this list to display in the listview
     //    https://stackoverflow.com/questions/31368814/attempt-to-invoke-interface-method-boolean-java-util-list-addjava-lang-object
@@ -63,6 +65,7 @@ public class PatientMedicalActivity extends AppCompatActivity implements Comment
         String street = extras.getString("street");
         String city = extras.getString("city");
         String zip = extras.getString("zip");
+        String patientid = extras.getString("patientid");
 
         textViewUserID = (TextView) findViewById(R.id.textViewUserID);
         textViewUserID.setText(userid);
@@ -76,7 +79,7 @@ public class PatientMedicalActivity extends AppCompatActivity implements Comment
         //https://stackoverflow.com/questions/37627328/passing-array-data-using-bundle-to-another-activity-on-listview-click
 
         listView = (ListView) findViewById(R.id.listViewPatients);
-
+        listViewComment =(ListView) findViewById(R.id.listViewComments);
 
         buttonAddComment = (Button) findViewById(R.id.buttonAddComment);
         //adding onclick listener for when button is clicked. It will open the dialog for input. https://www.youtube.com/watch?v=ARezg1D9Zd0&pbjreload=101
@@ -88,6 +91,8 @@ public class PatientMedicalActivity extends AppCompatActivity implements Comment
         });
 
         readMedicals(userid);
+
+        readComments(patientid);
 
         //back button code
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -108,7 +113,7 @@ public class PatientMedicalActivity extends AppCompatActivity implements Comment
     }
 
     //function to add comment to the database
-    private void addComment(final String comment){
+    private void addComment(final String commentmade){
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -144,14 +149,18 @@ public class PatientMedicalActivity extends AppCompatActivity implements Comment
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("patientid", String.valueOf(patientid));
-                params.put("comment", comment);
+                params.put("commentmade", commentmade);
                 return params;
             }
         };
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
         //have to add the retrieve here to show in the comment listview.
+        onRestart();
     }
-
+    private void readComments( String patientid){
+        PatientMedicalActivity.PerformNetworkRequestComment request = new PatientMedicalActivity.PerformNetworkRequestComment(Constants.URL_PATIENTS_COMMENT_RETRIEVE + "?patientid=" +  patientid, null, CODE_GET_REQUEST);
+        request.execute();
+    }
 
     @Override
     public void onRestart()
@@ -268,6 +277,7 @@ public class PatientMedicalActivity extends AppCompatActivity implements Comment
                     //we will create this method right now it is commented
                     //because we haven't created it yet
                     refreshMedicalList(object.getJSONArray("medicals"));
+//                    refreshCommentList(object.getJSONArray("comments"));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -318,5 +328,123 @@ public class PatientMedicalActivity extends AppCompatActivity implements Comment
         //creating the adapter and setting it to the listview
         PatientMedicalActivity.MedicalAdapter adapter = new PatientMedicalActivity.MedicalAdapter(medicalList);
         listView.setAdapter(adapter);
+    }
+
+    private void refreshCommentList(JSONArray comments) throws JSONException {
+        //clearing previous medicals
+        commentList.clear();
+
+        //traversing through all the items in the json array
+        //the json we got from the response
+        for (int i = 0; i < comments.length(); i++) {
+            //getting each medical object
+            JSONObject obj = comments.getJSONObject(i);
+
+            //adding the medicals to the list
+            commentList.add(new Comment(
+                    obj.getInt("id"),
+                    obj.getInt("patientid"),
+                    obj.getString("commentmade"),
+                    obj.getString("timestamp")
+            ));
+        }
+
+        //creating the adapter and setting it to the listview
+        PatientMedicalActivity.CommentAdapter adapter = new PatientMedicalActivity.CommentAdapter(commentList);
+        listViewComment.setAdapter(adapter);
+    }
+
+    //Adapter class for the comments
+    class CommentAdapter extends ArrayAdapter<Comment> {
+        //our medical list
+        List<Comment> commentList;
+
+        //constructor to get the list
+        public CommentAdapter(List<Comment> commentList) {
+            super(PatientMedicalActivity.this, R.layout.layout_comment_list, commentList);
+            this.commentList = commentList;
+        }
+
+        //method returning listview
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater2 = getLayoutInflater();
+            View listViewItemComment = inflater2.inflate(R.layout.layout_comment_list, null, true);
+
+            //getting textview for displaying the timestamp of the medical record
+            TextView textViewComment = listViewItemComment.findViewById(R.id.textViewComment);
+
+            final Comment comment = commentList.get(position);
+
+            textViewComment.setText(comment.getCommentmade());
+
+            return listViewItemComment;
+        }
+    }
+
+
+    //***Network Request for the Comments
+
+    private class PerformNetworkRequestComment extends AsyncTask<Void, Void, String> {
+
+        //the url where we need to send the request
+        String url;
+
+        //the parameters
+        HashMap<String, String> params;
+
+        //the request code to define whether it is a GET or POST
+        int requestCode;
+
+        //constructor to initialize values
+        PerformNetworkRequestComment(String url, HashMap<String, String> params, int requestCode) {
+            this.url = url;
+            this.params = params;
+            this.requestCode = requestCode;
+        }
+
+        //when the task started displaying a progressbar
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+//            progressBar.setVisibility(View.VISIBLE);
+        }
+
+
+        //this method will give the response from the request
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+//            progressBar.setVisibility(View.INVISIBLE);
+            try {
+                JSONObject object = new JSONObject(s);
+                if (!object.getBoolean("error")) {
+                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+                    //refreshing the medicalList after every operation
+                    //so we get an updated list
+                    //we will create this method right now it is commented
+                    //because we haven't created it yet
+//                    refreshMedicalList(object.getJSONArray("medicals"));
+                    refreshCommentList(object.getJSONArray("comments"));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //the network operation will be performed in background
+        @Override
+        protected String doInBackground(Void... voids) {
+            PatientRequestHandler requestHandler = new PatientRequestHandler();
+
+            if (requestCode == CODE_POST_REQUEST)
+                return requestHandler.sendPostRequest(url, params);
+
+
+            if (requestCode == CODE_GET_REQUEST)
+                return requestHandler.sendGetRequest(url);
+
+            return null;
+        }
     }
 }

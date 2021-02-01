@@ -12,6 +12,7 @@ public class Constants {
     public static final String URL_PATIENTS_RETRIEVE = ROOT_URL+"retrievePatients.php";
     public static final String URL_PATIENTS_MEDICAL_RETRIEVE = ROOT_URL+"retrieveListofMedicals.php";
     public static final String URL_ADD_COMMENT = ROOT_URL+"addComment.php";
+    public static final String URL_PATIENTS_COMMENT_RETRIEVE = ROOT_URL+"retrieveListofComments.php";
 
 
 

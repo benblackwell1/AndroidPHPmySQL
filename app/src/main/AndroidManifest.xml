@@ -12,9 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SelectedMedicalActivity" android:parentActivityName=".PatientMedicalActivity">
-        </activity>
-        <activity android:name=".PatientMedicalActivity" android:parentActivityName=".AdminActivity" />
+        <activity android:name=".CreateAppointmentActivity"></activity>
+        <activity
+            android:name=".SelectedMedicalActivity"
+            android:parentActivityName=".PatientMedicalActivity"></activity>
+        <activity
+            android:name=".PatientMedicalActivity"
+            android:parentActivityName=".AdminActivity" />
         <activity android:name=".AdminActivity" />
         <activity android:name=".UpdateMedical" />
         <activity android:name=".medicalActivity" />

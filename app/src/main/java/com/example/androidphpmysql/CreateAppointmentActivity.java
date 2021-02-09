@@ -1,130 +1,109 @@
 package com.example.androidphpmysql;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.ProgressBar;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import static android.R.layout.simple_spinner_item;
 
-import static android.view.View.GONE;
-
-public class AdminActivity extends AppCompatActivity implements View.OnClickListener{
+public class CreateAppointmentActivity extends AppCompatActivity {
 
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
-    private Button buttonAddApointment;
 
-     ListView listView;
-     ProgressBar progressBar;
+    EditText date_time_in;
+    Spinner spinnerPatient;
 
-     //will use this list to display in the listview
+    //will use this list to display in the spinner
     List<Patient> patientList;
 
-    //code to aid me recieved from -> https://www.simplifiedcoding.net/android-mysql-tutorial-to-perform-basic-crud-operation/
+    private ArrayList<String> names = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin);
+        setContentView(R.layout.activity_create_appointment);
+        date_time_in = findViewById(R.id.date_time_input);
 
-        listView = (ListView) findViewById(R.id.listViewPatients);
+        //disabling the keyboard when the datetime edittext is clicked
+        date_time_in.setInputType(InputType.TYPE_NULL);
 
+        //on click listener to create dialog for the date-time
+        date_time_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDateTimeDialog(date_time_in);
+            }
+        });
+
+
+        spinnerPatient = (Spinner) findViewById(R.id.spinnerPatient);
         patientList = new ArrayList<>();
-
         readPatients();
 
-        buttonAddApointment = (Button) findViewById(R.id.buttonAddAppointment);
-        buttonAddApointment.setOnClickListener(this);
-
     }
-    @Override
-    public void onRestart()
-    {
-        super.onRestart();
-        finish();
-        startActivity(getIntent());
+
+    //function to show the dialog
+    private void showDateTimeDialog(final EditText date_time_in){
+        final Calendar calendar = Calendar.getInstance();
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener(){
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
+                calendar.set(Calendar.YEAR,year);
+                calendar.set(Calendar.MONTH,month);
+                calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+
+                TimePickerDialog.OnTimeSetListener timeSetListener=new TimePickerDialog.OnTimeSetListener(){
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute){
+                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        calendar.set(Calendar.MINUTE, minute);
+
+                        //formatting the date time
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd HH:mm");
+
+                        //setting the value to the editText
+                        date_time_in.setText(simpleDateFormat.format(calendar.getTime()));
+                    }
+                };
+                //creating the time dialog after the date has been picked
+                new TimePickerDialog(CreateAppointmentActivity.this,timeSetListener,calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),false).show();
+
+            }
+        };
+        //creating date dialog for date to be pciked.
+        new DatePickerDialog(CreateAppointmentActivity.this,dateSetListener,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
-    class PatientAdapter extends ArrayAdapter<Patient> {
-
-        //our patient list
-        List<Patient> patientList;
-
-        //constructor to get the list
-        public PatientAdapter(List<Patient> patientList) {
-            super(AdminActivity.this, R.layout.layout_patient_list, patientList);
-            this.patientList = patientList;
-        }
-
-        //method returning listview
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater inflater = getLayoutInflater();
-            View listViewItem = inflater.inflate(R.layout.layout_patient_list, null, true);
-
-            //getting textview for displaying name
-            TextView textViewName = listViewItem.findViewById(R.id.textViewName);
-
-            final Patient patient = patientList.get(position);
-
-            textViewName.setText(patient.getFname() + " " + patient.getLname());
-
-            //attaching a click listener to the name textview
-            //code from https://stackoverflow.com/questions/51578807/how-do-i-pass-id-of-listview-item-i-got-from-server-to-another-activity-onclick
-           listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-               @Override
-               public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                   Patient obj = getItem(position);
-                   int patientid = obj.getId();
-                   int userid = obj.getUserid();
-                   String fname = obj.getFname();
-                   String lname = obj.getLname();
-                   String street = obj.getStreet();
-                   String city = obj.getCity();
-                   String zip = obj.getZip();
-                   Intent intent = new Intent(AdminActivity.this, PatientMedicalActivity.class);
-                   Bundle extras = new Bundle();
-                   extras.putString("patientid", String.valueOf(patientid));
-                   extras.putString("userid", String.valueOf(userid));
-                   extras.putString("fname", fname);
-                   extras.putString("lname", lname);
-                   extras.putString("street", street);
-                   extras.putString("city", city);
-                   extras.putString("zip", zip);
-                   intent.putExtras(extras);
-                   startActivity(intent);
-               }
-           });
 
 
-            return listViewItem;
-        }
-    }
     private void readPatients(){
-        PerformNetworkRequest request = new PerformNetworkRequest(Constants.URL_PATIENTS_RETRIEVE, null, CODE_GET_REQUEST);
+        CreateAppointmentActivity.PerformNetworkRequest request = new CreateAppointmentActivity.PerformNetworkRequest(Constants.URL_PATIENTS_RETRIEVE, null, CODE_GET_REQUEST);
         request.execute();
     }
     private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
@@ -210,16 +189,18 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
                     obj.getString("zip"),
                     obj.getString("phone"),
                     obj.getString("prsi")
-                    ));
+            ));
         }
 
-        //creating the adapter and setting it to the listview
-        PatientAdapter adapter = new PatientAdapter(patientList);
-        listView.setAdapter(adapter);
-    }
-    @Override
-    public void onClick(View view){
-        if(view == buttonAddApointment)
-            startActivity(new Intent(this, CreateAppointmentActivity.class));
+        //traversing the array of patients and putting their names in another array //https://demonuts.com/android-populate-spinner-from-json/
+        for (int i = 0; i < patientList.size(); i++){
+            names.add(patientList.get(i).getFname() + " " + patientList.get(i).getLname());
+        }
+
+        //adapter to put the patients names in the spinner
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(CreateAppointmentActivity.this, simple_spinner_item, names);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+        spinnerPatient.setAdapter(spinnerArrayAdapter);
     }
 }
+

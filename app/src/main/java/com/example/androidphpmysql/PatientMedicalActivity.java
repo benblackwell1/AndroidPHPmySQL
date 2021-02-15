@@ -219,7 +219,7 @@ public class PatientMedicalActivity extends AppCompatActivity implements Comment
                     extras.putString("Weight", weight);
                     extras.putString("Alcohol", alcohol);
                     extras.putString("Smoking", smoking);
-                    extras.putString("UndelyingCondition", underlyingcondition);
+                    extras.putString("UnderlyingCondition", underlyingcondition);
                     extras.putString("Allergy", allergy);
                     extras.putString("Medication", medication);
 

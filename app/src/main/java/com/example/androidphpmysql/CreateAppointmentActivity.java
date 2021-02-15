@@ -4,21 +4,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,20 +33,24 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import static android.R.layout.simple_spinner_item;
 
-public class CreateAppointmentActivity extends AppCompatActivity {
+public class CreateAppointmentActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
 
     EditText date_time_in;
     Spinner spinnerPatient;
-
+    Button buttonCreateAppointment;
+    EditText appointmentDesc;
+    TextView textViewPatID;
     //will use this list to display in the spinner
     List<Patient> patientList;
 
-    private ArrayList<String> names = new ArrayList<String>();
+    private ArrayList names = new ArrayList<>();
 
 
     @Override
@@ -62,10 +70,15 @@ public class CreateAppointmentActivity extends AppCompatActivity {
             }
         });
 
-
+        appointmentDesc = (EditText) findViewById(R.id.editAppointmentFor);
         spinnerPatient = (Spinner) findViewById(R.id.spinnerPatient);
+        textViewPatID = (TextView) findViewById(R.id.textViewPatID);
         patientList = new ArrayList<>();
         readPatients();
+
+        //onClick listener
+        buttonCreateAppointment = (Button) findViewById(R.id.buttonCreateAppointment);
+        buttonCreateAppointment.setOnClickListener(this);
 
     }
 
@@ -81,12 +94,12 @@ public class CreateAppointmentActivity extends AppCompatActivity {
 
                 TimePickerDialog.OnTimeSetListener timeSetListener=new TimePickerDialog.OnTimeSetListener(){
                     @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute){
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute ){
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendar.set(Calendar.MINUTE, minute);
 
                         //formatting the date time
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd HH:mm");
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
                         //setting the value to the editText
                         date_time_in.setText(simpleDateFormat.format(calendar.getTime()));
@@ -194,13 +207,100 @@ public class CreateAppointmentActivity extends AppCompatActivity {
 
         //traversing the array of patients and putting their names in another array //https://demonuts.com/android-populate-spinner-from-json/
         for (int i = 0; i < patientList.size(); i++){
-            names.add(patientList.get(i).getFname() + " " + patientList.get(i).getLname());
+            names.add(patientList.get(i).getId() + " " + patientList.get(i).getFname() + " " + patientList.get(i).getLname());
         }
+        names.add(0, "Choose Patient");
 
         //adapter to put the patients names in the spinner
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(CreateAppointmentActivity.this, simple_spinner_item, names);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         spinnerPatient.setAdapter(spinnerArrayAdapter);
+//
+        //**need to get the id of the patient with an onItemSelectedListener
+        //adjust the hashmap accordingly.
+        spinnerPatient.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String nameSelected = spinnerPatient.getItemAtPosition(position).toString();
+                int nameid;
+                for(int i = 0; i <patientList.size(); i++){
+                    if (nameSelected.equals("Choose Patient")){
+                        textViewPatID.setText("Choose Patient");
+                    }
+                    if(nameSelected.equals(patientList.get(i).getId() + " " + patientList.get(i).getFname() + " " + patientList.get(i).getLname())) {
+                        nameid = patientList.get(i).getId();
+                        textViewPatID.setText(Integer.toString(nameid));
+
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+}
+
+
+    @Override
+    public void onClick(View v) {
+        if (v == buttonCreateAppointment)
+        {
+            addAppointment();
+        }
+    }
+
+    private void addAppointment(){
+
+
+        final String patID = textViewPatID.getText().toString().trim();
+        final String appDesc = appointmentDesc.getText().toString().trim();
+        final String appDate = date_time_in.getText().toString().trim();
+
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                Constants.URL_CREATE_APPOINTMENT,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                error.getMessage(),
+                                Toast.LENGTH_SHORT
+                        ).show();
+
+                    }
+                }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("patientid", patID);
+                params.put("appdate", appDate);
+                params.put("appdesc", appDesc);
+
+                return params;
+            }
+        };
+        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+
+        //***Need to have a response after the record has been added
+        //also need to hide the patientID
+
+
     }
 }
 

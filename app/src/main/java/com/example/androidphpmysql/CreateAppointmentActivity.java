@@ -103,6 +103,7 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
 
                         //setting the value to the editText
                         date_time_in.setText(simpleDateFormat.format(calendar.getTime()));
+
                     }
                 };
                 //creating the time dialog after the date has been picked
@@ -110,8 +111,12 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
 
             }
         };
-        //creating date dialog for date to be pciked.
-        new DatePickerDialog(CreateAppointmentActivity.this,dateSetListener,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+        //disabling previous dates so they cant be selected
+
+        //creating date dialog for date to be picked.
+        DatePickerDialog datePickerDialog = new DatePickerDialog(CreateAppointmentActivity.this,dateSetListener,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
+        datePickerDialog.show();
     }
 
 
@@ -300,6 +305,11 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
         //***Need to have a response after the record has been added
         //also need to hide the patientID
 
+        AppointmentCreated();
+
+    }
+    private void AppointmentCreated(){
+        //go back to the appointment main page
 
     }
 }

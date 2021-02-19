@@ -114,6 +114,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(view == textViewLogin)
             startActivity(new Intent(this, LoginActivity.class));
         if(view == buttonAdminTest)
-            startActivity(new Intent(this, AdminActivity.class));
+            startActivity(new Intent(this, AdminSwitchboardActivity.class));
     }
 }

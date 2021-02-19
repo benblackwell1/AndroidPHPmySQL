@@ -32,11 +32,11 @@ import java.util.List;
 
 import static android.view.View.GONE;
 
-public class AdminActivity extends AppCompatActivity implements View.OnClickListener{
+public class AdminActivity extends AppCompatActivity {
 
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
-    private Button buttonAddApointment;
+
 
      ListView listView;
      ProgressBar progressBar;
@@ -56,9 +56,6 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
         patientList = new ArrayList<>();
 
         readPatients();
-
-        buttonAddApointment = (Button) findViewById(R.id.buttonAddAppointment);
-        buttonAddApointment.setOnClickListener(this);
 
     }
     @Override
@@ -216,10 +213,5 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
         //creating the adapter and setting it to the listview
         PatientAdapter adapter = new PatientAdapter(patientList);
         listView.setAdapter(adapter);
-    }
-    @Override
-    public void onClick(View view){
-        if(view == buttonAddApointment)
-            startActivity(new Intent(this, CreateAppointmentActivity.class));
     }
 }

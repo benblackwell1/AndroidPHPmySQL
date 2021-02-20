@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
@@ -310,7 +311,7 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
     }
     private void AppointmentCreated(){
         //go back to the appointment main page
-
+        startActivity(new Intent(this, AppointmentMainActivity.class));
     }
 }
 

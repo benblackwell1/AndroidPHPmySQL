@@ -13,15 +13,24 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".AdminSwitchboardActivity"></activity>
-        <activity android:name=".AppointmentMainActivity" />
-        <activity android:name=".CreateAppointmentActivity" />
+
+        <activity android:name=".AppointmentMainActivity"
+            android:parentActivityName=".AdminSwitchboardActivity"/>
+
+        <activity android:name=".CreateAppointmentActivity"
+            android:parentActivityName=".AppointmentMainActivity"/>
+
         <activity
             android:name=".SelectedMedicalActivity"
             android:parentActivityName=".PatientMedicalActivity" />
+
         <activity
             android:name=".PatientMedicalActivity"
             android:parentActivityName=".AdminActivity" />
-        <activity android:name=".AdminActivity" />
+
+        <activity android:name=".AdminActivity"
+            android:parentActivityName=".AdminSwitchboardActivity"/>
+
         <activity android:name=".UpdateMedical" />
         <activity android:name=".medicalActivity" />
         <activity android:name=".ProfileActivity" />

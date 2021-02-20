@@ -14,6 +14,8 @@ public class Constants {
     public static final String URL_ADD_COMMENT = ROOT_URL+"addComment.php";
     public static final String URL_PATIENTS_COMMENT_RETRIEVE = ROOT_URL+"retrieveListofComments.php";
     public static final String URL_CREATE_APPOINTMENT = ROOT_URL+"createAppointment.php";
+    public static final String URL_APPOINTMENTS_RETRIEVE = ROOT_URL+"retrieveListofAppointments.php";
+
 
 
 

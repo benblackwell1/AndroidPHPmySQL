@@ -56,7 +56,8 @@ public class AdminActivity extends AppCompatActivity {
         patientList = new ArrayList<>();
 
         readPatients();
-
+        //back button code
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     @Override
     public void onRestart()
@@ -214,4 +215,5 @@ public class AdminActivity extends AppCompatActivity {
         PatientAdapter adapter = new PatientAdapter(patientList);
         listView.setAdapter(adapter);
     }
+
 }

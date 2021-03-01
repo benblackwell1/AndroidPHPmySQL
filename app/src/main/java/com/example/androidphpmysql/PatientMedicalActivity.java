@@ -95,7 +95,7 @@ public class PatientMedicalActivity extends AppCompatActivity implements Comment
         readComments(patientid);
 
         //back button code
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     //method to open dialog
@@ -155,20 +155,21 @@ public class PatientMedicalActivity extends AppCompatActivity implements Comment
         };
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
         //have to add the retrieve here to show in the comment listview.
-        onRestart();
+        finish();
+        startActivity(getIntent());
     }
     private void readComments( String patientid){
         PatientMedicalActivity.PerformNetworkRequestComment request = new PatientMedicalActivity.PerformNetworkRequestComment(Constants.URL_PATIENTS_COMMENT_RETRIEVE + "?patientid=" +  patientid, null, CODE_GET_REQUEST);
         request.execute();
     }
 
-    @Override
-    public void onRestart()
-    {
-        super.onRestart();
-        finish();
-        startActivity(getIntent());
-    }
+//    @Override
+//    public void onRestart()
+//    {
+//        super.onRestart();
+//        finish();
+//        startActivity(getIntent());
+//    }
 
     class MedicalAdapter extends ArrayAdapter<Medical> {
         //our medical list
@@ -223,8 +224,9 @@ public class PatientMedicalActivity extends AppCompatActivity implements Comment
                     extras.putString("Allergy", allergy);
                     extras.putString("Medication", medication);
 
+
                     intent.putExtras(extras);
-                    finish();
+//                    finish();
                     startActivity(intent);
                 }
             });

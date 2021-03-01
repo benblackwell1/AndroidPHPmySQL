@@ -40,14 +40,16 @@
             android:text="Patient ID:"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.25"/>
+            android:layout_weight="0.25"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/textViewPatID"
             android:text=""
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.25"/>
+            android:layout_weight="0.25"
+            android:visibility="gone"/>
     </LinearLayout>
 
 

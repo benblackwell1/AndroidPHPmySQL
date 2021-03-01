@@ -80,9 +80,14 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
         //onClick listener
         buttonCreateAppointment = (Button) findViewById(R.id.buttonCreateAppointment);
         buttonCreateAppointment.setOnClickListener(this);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
     //function to show the dialog
     private void showDateTimeDialog(final EditText date_time_in){
         final Calendar calendar = Calendar.getInstance();

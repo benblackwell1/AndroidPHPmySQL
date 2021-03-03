@@ -11,7 +11,8 @@
         android:layout_alignParentRight="true"
         android:src="@drawable/ic_screeningicon"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:visibility="invisible"/>
     
     <TextView
         android:layout_width="match_parent"

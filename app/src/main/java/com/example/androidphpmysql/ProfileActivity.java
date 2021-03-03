@@ -170,7 +170,7 @@ public class ProfileActivity extends AppCompatActivity {
                             } else {
                                String [] noApp = {"No Appointments Upcoming"};
                                ArrayAdapter<String> noAppointment= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, noApp);
-                                listView.setAdapter(noAppointment);
+                               listView.setAdapter(noAppointment);
                             }
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -200,14 +200,41 @@ public class ProfileActivity extends AppCompatActivity {
             super(ProfileActivity.this, R.layout.layout_custom_listview, appDates);
             this.appDates = appDates;
         }
-
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = getLayoutInflater();
             View view = getLayoutInflater().inflate(R.layout.layout_custom_listview, null);
             ImageView mImageView = (ImageView) view.findViewById(R.id.imageView);
             TextView mTextView = view.findViewById(R.id.textViewAppointmentDate);
-            mTextView.setText(appDates.get(position));
+//            mTextView.setText(appDates.get(position));
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            final long HOUR = 3600*1000; // in milli-seconds.
+            Date today = new Date();
+            Date plus2Day = new Date(today.getTime()+48*HOUR);
+
+//
+//            for (int i = 0; i < appDates.size(); i++) {
+//                try {
+            try {
+                if(today.before(sdf.parse(appDates.get(position))) && plus2Day.after(sdf.parse(appDates.get(position)))){
+                    mTextView.setText(appDates.get(position));
+                    mImageView.setVisibility(View.VISIBLE);
+                }
+                else {
+                    mTextView.setText(appDates.get(position));
+                    mImageView.setVisibility(View.GONE);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//
+//                }
+//            }
+
+            //showing the screening image if the date is within 48hrs of today
 
             return view;
         }

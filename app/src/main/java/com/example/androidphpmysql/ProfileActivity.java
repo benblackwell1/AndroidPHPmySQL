@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -201,7 +202,7 @@ public class ProfileActivity extends AppCompatActivity {
             this.appDates = appDates;
         }
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = getLayoutInflater();
             View view = getLayoutInflater().inflate(R.layout.layout_custom_listview, null);
             ImageView mImageView = (ImageView) view.findViewById(R.id.imageView);
@@ -213,9 +214,8 @@ public class ProfileActivity extends AppCompatActivity {
             Date today = new Date();
             Date plus2Day = new Date(today.getTime()+48*HOUR);
 
-//
-//            for (int i = 0; i < appDates.size(); i++) {
-//                try {
+
+            //showing the screening image if the date is within 48hrs of today
             try {
                 if(today.before(sdf.parse(appDates.get(position))) && plus2Day.after(sdf.parse(appDates.get(position)))){
                     mTextView.setText(appDates.get(position));
@@ -228,14 +228,26 @@ public class ProfileActivity extends AppCompatActivity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//
-//                }
-//            }
 
-            //showing the screening image if the date is within 48hrs of today
+            //when the the image for screening is clicked
+            mImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for (int i = 0; i < appointmentList.size(); i++) {
+                        if(appointmentList.get(i).getAppdate() == appDates.get(position)){
+                            String appointmentID = String.valueOf(appointmentList.get(i).getId());
+                            Intent intent = new Intent(ProfileActivity.this, PatientScreeningActivity.class);
+                            intent.putExtra("appID", appointmentID);
+                            startActivity(intent);
+                        }
+                    }
+                }
+            });
 
+            //resources
+            //https://stackoverflow.com/questions/883060/how-can-i-determine-if-a-date-is-between-two-dates-in-java
+            //https://stackoverflow.com/questions/7348150/android-why-setvisibilityview-gone-or-setvisibilityview-invisible-do-not
+            //https://stackoverflow.com/questions/3581258/adding-n-hours-to-a-date-in-java
             return view;
         }
     }

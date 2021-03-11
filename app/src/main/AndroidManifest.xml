@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".PatientScreeningActivity"></activity>
         <activity
             android:name=".AppointmentHistoryActivity"
             android:parentActivityName=".AppointmentMainActivity" />

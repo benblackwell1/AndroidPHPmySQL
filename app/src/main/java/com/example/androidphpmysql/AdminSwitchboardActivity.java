@@ -10,7 +10,7 @@ import android.widget.Button;
 public class AdminSwitchboardActivity extends AppCompatActivity implements View.OnClickListener{
 
     //buttons for switching activities
-    private Button buttonAppointments, buttonPatients, buttonScreenings;
+    private Button buttonAppointments, buttonPatients, buttonScreenings, buttonWaitingRoom;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,10 +19,12 @@ public class AdminSwitchboardActivity extends AppCompatActivity implements View.
         buttonAppointments = (Button) findViewById(R.id.buttonAppointments);
         buttonPatients = (Button) findViewById(R.id.buttonPatients);
         buttonScreenings = (Button) findViewById(R.id.buttonScreenings);
+        buttonWaitingRoom = (Button) findViewById(R.id.buttonWaitingRoom);
 
         buttonAppointments.setOnClickListener(this);
         buttonPatients.setOnClickListener(this);
         buttonScreenings.setOnClickListener(this);
+        buttonWaitingRoom.setOnClickListener(this);
 
     }
     @Override
@@ -35,5 +37,8 @@ public class AdminSwitchboardActivity extends AppCompatActivity implements View.
             startActivity(new Intent(this, AdminActivity.class));
         //open the screening page
         //need to create a screening page
+        //open the Patients Page
+        if(view == buttonWaitingRoom)
+            startActivity(new Intent(this, AdminWaitingRoomActivity.class));
     }
 }

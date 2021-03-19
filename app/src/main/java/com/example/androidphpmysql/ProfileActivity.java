@@ -1,13 +1,20 @@
 package com.example.androidphpmysql;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.Image;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -43,7 +51,8 @@ public class ProfileActivity extends AppCompatActivity {
     List<Appointment> appointmentList;
     private ArrayList appDates = new ArrayList<>();
     List<Patient> patientList;
-
+    List<Screening> screeningList;
+    Button btnWaitingRoom;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +75,18 @@ public class ProfileActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listViewPatientAppointments);
         appointmentList = new ArrayList<>();
         patientList = new ArrayList<>();
+        screeningList = new ArrayList<>();
 
+        btnWaitingRoom = (Button)findViewById(R.id.btnWaitingRoom);
+        btnWaitingRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(new Intent(ProfileActivity.this, WaitingRoomActivity.class));
+            }
+        });
+
+        getScreenings();
         getPatients();
         readAppointments();
     }
@@ -217,7 +237,8 @@ public class ProfileActivity extends AppCompatActivity {
 
             //showing the screening image if the date is within 48hrs of today
             try {
-                if(today.before(sdf.parse(appDates.get(position))) && plus2Day.after(sdf.parse(appDates.get(position)))){
+                if(today.before(sdf.parse(appDates.get(position))) && plus2Day.after(sdf.parse(appDates.get(position)))) {
+                    //code to show the screening icon if the date falls between the 48hr
                     mTextView.setText(appDates.get(position));
                     mImageView.setVisibility(View.VISIBLE);
                 }
@@ -229,12 +250,25 @@ public class ProfileActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+
+
+//***Test
+//        //checking whether a screening has been uploaded already
+//        for(int i = 0; i < appointmentList.size(); i++){
+//            for(int y = 0; y < screeningList.size(); y++){
+//                if(appointmentList.get(i).getId()==screeningList.get(y).getAppointmentid()){
+//                    Toast.makeText(ProfileActivity.this, "Screening already uploaded", Toast.LENGTH_SHORT).show();
+//                    mImageView.setColorFilter(Color.GREEN);
+//                    mImageView.setClickable(false);
+//                }
+
+
             //when the the image for screening is clicked
             mImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     for (int i = 0; i < appointmentList.size(); i++) {
-                        if(appointmentList.get(i).getAppdate() == appDates.get(position)){
+                        if (appointmentList.get(i).getAppdate() == appDates.get(position)) {
                             String appointmentID = String.valueOf(appointmentList.get(i).getId());
                             Intent intent = new Intent(ProfileActivity.this, PatientScreeningActivity.class);
                             intent.putExtra("appID", appointmentID);
@@ -243,6 +277,44 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 }
             });
+
+            //***Test
+//            mImageView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    myloop:
+//                        for (int i = 0; i < appointmentList.size(); i++) {
+//                            if (appointmentList.get(i).getAppdate().equals(appDates.get(position))) {
+//                                for (int y = 0; y < screeningList.size(); y++){
+//                                    if (appointmentList.get(i).getId() == screeningList.get(y).getAppointmentid()) {
+//                                        AlertDialog.Builder builder1 = new AlertDialog.Builder(ProfileActivity.this);
+//                                        builder1.setTitle("Alert!");
+//                                        builder1.setMessage("Screened already");
+//                                        builder1.setCancelable(false);
+//                                        builder1.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(DialogInterface dialog, int which) {
+//                                            }
+//                                        });
+//
+//                                        AlertDialog Alert1 = builder1.create();
+//                                        Alert1.show();
+//                                        break myloop;
+//                                    }
+//                                 else {
+//                                        String appointmentID = String.valueOf(appointmentList.get(i).getId());
+//                                        Intent intent = new Intent(ProfileActivity.this, PatientScreeningActivity.class);
+//                                        intent.putExtra("appID", appointmentID);
+//                                        startActivity(intent);
+//                                        break myloop;
+//                                }
+//                            }
+//                                break myloop;
+//                        }
+//                    }
+//                }
+//            });
+
 
             //resources
             //https://stackoverflow.com/questions/883060/how-can-i-determine-if-a-date-is-between-two-dates-in-java
@@ -372,4 +444,91 @@ public class ProfileActivity extends AppCompatActivity {
             }
             return true;
         }
+
+        private void getScreenings(){
+            PerformNetworkRequest3 request = new PerformNetworkRequest3(Constants.URL_RETRIEVE_SCREENING, null, CODE_GET_REQUEST);
+            request.execute();
+        }
+    private class PerformNetworkRequest3 extends AsyncTask<Void, Void, String> {
+
+        //the url where we need to send the request
+        String url;
+
+        //the parameters
+        HashMap<String, String> params;
+
+        //the request code to define whether it is a GET or POST
+        int requestCode;
+
+        //constructor to initialize values
+        PerformNetworkRequest3(String url, HashMap<String, String> params, int requestCode) {
+            this.url = url;
+            this.params = params;
+            this.requestCode = requestCode;
+        }
+
+        //when the task started displaying a progressbar
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+//            progressBar.setVisibility(View.VISIBLE);
+        }
+
+
+        //this method will give the response from the request
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+//            progressBar.setVisibility(View.INVISIBLE);
+            try {
+                JSONObject object = new JSONObject(s);
+                if (!object.getBoolean("error")) {
+                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+                    refreshScreeningList(object.getJSONArray("screenings"));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //the network operation will be performed in background
+        @Override
+        protected String doInBackground(Void... voids) {
+            PatientRequestHandler requestHandler = new PatientRequestHandler();
+
+            if (requestCode == CODE_POST_REQUEST)
+                return requestHandler.sendPostRequest(url, params);
+
+
+            if (requestCode == CODE_GET_REQUEST)
+                return requestHandler.sendGetRequest(url);
+
+            return null;
+        }
+    }
+    private void refreshScreeningList(JSONArray screenings) throws JSONException {
+        //clearing previous patients
+        screeningList.clear();
+
+        //traversing through all the items in the json array
+        //the json we got from the response
+        for (int i = 0; i < screenings.length(); i++) {
+            //getting each patient object
+            JSONObject obj = screenings.getJSONObject(i);
+
+            //adding the patient to the list
+            screeningList.add(new Screening(
+                    obj.getInt("id"),
+                    obj.getInt("appointmentid"),
+                    obj.getString("screeningdate"),
+                    obj.getString("status")
+            ));
+        }
+        //comparing the dates to the current date
+        // https://stackoverflow.com/questions/37734063/how-to-compare-datetime-in-android/37734446
+        //code for adapter for the listview
+        //https://stackoverflow.com/questions/19079400/arrayadapter-in-android-to-create-simple-listview
+
+
+    }
     }

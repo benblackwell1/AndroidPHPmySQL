@@ -16,6 +16,10 @@ public class Constants {
     public static final String URL_CREATE_APPOINTMENT = ROOT_URL+"createAppointment.php";
     public static final String URL_APPOINTMENTS_RETRIEVE = ROOT_URL+"retrieveListofAppointments.php";
     public static final String URL_SUBMIT_SCREENING = ROOT_URL+"insertScreening.php";
+    public static final String URL_RETRIEVE_SCREENING= ROOT_URL+"retrieveScreening.php";
+    public static final String URL_ADD_WAITING_ROOM= ROOT_URL+"addWaitingRoom.php";
+    public static final String URL_DELETE_WAITING_ROOM= ROOT_URL+"deleteWaitingRoom.php";
+    public static final String URL_RETRIEVE_WAITING_ROOM= ROOT_URL+"retrieveWaitingRoom.php";
 
 
 

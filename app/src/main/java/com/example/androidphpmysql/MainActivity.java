@@ -80,9 +80,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         progressDialog.dismiss();
                         try {
                             JSONObject  jsonObject = new JSONObject(response);
-
                             Toast.makeText(getApplicationContext(),jsonObject.getString("message"),Toast.LENGTH_LONG).show();
-
+                            userLogin();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -116,4 +115,64 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(view == buttonAdminTest)
             startActivity(new Intent(this, AdminSwitchboardActivity.class));
     }
-}
+
+    private void userLogin() {
+            final String username = editTextUsername.getText().toString().trim();
+            final String password = editTextPassword.getText().toString().trim();
+
+            progressDialog.show();
+
+            StringRequest stringRequest = new StringRequest(
+                    Request.Method.POST,
+                    Constants.URL_LOGIN,
+                    new Response.Listener<String>(){
+                        @Override
+                        public void onResponse(String response){
+                            progressDialog.dismiss();
+                            //will determine weather the user is successfully logged in or weather the parameters are incorrect
+                            try {
+                                JSONObject obj = new JSONObject(response.substring(response.indexOf("{"),response.lastIndexOf("}") +1));
+                                if(!obj.getBoolean("error")){
+                                    SharedPrefManager.getInstance(getApplicationContext())
+                                            .userLogin(
+                                                    obj.getInt("id"),
+                                                    obj.getString("username"),
+                                                    obj.getString("email")
+                                            );
+                                    startActivity(new Intent(getApplicationContext(), CompleteRegistrationActivity.class));
+                                    finish();
+                                }else{
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            obj.getString("message"),
+                                            Toast.LENGTH_LONG
+                                    ).show();
+                                }
+                            }catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener(){
+                        @Override
+                        public void onErrorResponse(VolleyError error){
+                            progressDialog.dismiss();
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    error.getMessage(),
+                                    Toast.LENGTH_LONG
+                            ).show();
+                        }
+                    }
+            ){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("username",username);
+                    params.put("password", password);
+                    return params;
+                }
+            };
+            RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+        }
+    }

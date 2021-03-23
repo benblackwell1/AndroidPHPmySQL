@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AdminWaitingRoomActivity"></activity>
+        <activity android:name=".CompleteRegistrationActivity"></activity>
+        <activity android:name=".AdminScreeningActivity" />
+        <activity android:name=".BarChartActivity" />
+        <activity android:name=".AdminWaitingRoomActivity" />
         <activity android:name=".WaitingRoomActivity" />
         <activity android:name=".PatientScreeningActivity" />
         <activity

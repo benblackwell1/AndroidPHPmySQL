@@ -84,7 +84,9 @@ public class PatientScreeningActivity extends AppCompatActivity {
                     Toast.makeText(PatientScreeningActivity.this, "submitted", Toast.LENGTH_SHORT).show();
 
                     insertScreening();
+                    Intent intent = new Intent( PatientScreeningActivity.this,ProfileActivity.class);
                     finish();
+                    startActivity(intent);
                 }else{
                     Toast.makeText(PatientScreeningActivity.this, "Agree to the terms please", Toast.LENGTH_SHORT).show();
                 }

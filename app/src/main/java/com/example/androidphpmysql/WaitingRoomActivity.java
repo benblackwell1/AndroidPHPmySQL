@@ -66,8 +66,14 @@ public class WaitingRoomActivity extends AppCompatActivity {
             }
         });
 
+        //channel for the notification
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel("Enter Surgery", "Enter Surgery", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+
         loadIntoWaitingRoom();
-        //code in the retrieve here and create a function that will add it to the list view
         getAllWaitingRoom();
     }
 
@@ -209,6 +215,16 @@ public class WaitingRoomActivity extends AppCompatActivity {
                                 startActivity(new Intent(WaitingRoomActivity.this, ProfileActivity.class));
                             }
                         }).show();
+                //notification to indicate to enter the surgery
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(WaitingRoomActivity.this, "Enter Surgery");
+                builder.setContentTitle("Enter the surgery");
+                builder.setContentText("Please enter the surgery. The dentist is ready to see you.");
+                builder.setSmallIcon(R.drawable.ic_launcher_background);
+                builder.setAutoCancel(true);
+
+                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(WaitingRoomActivity.this);
+                managerCompat.notify(1,builder.build());
+
             }else{
                 Toast.makeText(getApplicationContext(), "Still waiting", Toast.LENGTH_SHORT).show();
             }

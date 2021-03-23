@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.ImageViewCompat;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -53,6 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
     List<Patient> patientList;
     List<Screening> screeningList;
     Button btnWaitingRoom;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +79,7 @@ public class ProfileActivity extends AppCompatActivity {
         patientList = new ArrayList<>();
         screeningList = new ArrayList<>();
 
-        btnWaitingRoom = (Button)findViewById(R.id.btnWaitingRoom);
+        btnWaitingRoom = (Button) findViewById(R.id.btnWaitingRoom);
         btnWaitingRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,9 +191,9 @@ public class ProfileActivity extends AppCompatActivity {
                                 CustomAdapter adapter = new CustomAdapter(appDates);
                                 listView.setAdapter(adapter);
                             } else {
-                               String [] noApp = {"No Appointments Upcoming"};
-                               ArrayAdapter<String> noAppointment= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, noApp);
-                               listView.setAdapter(noAppointment);
+                                String[] noApp = {"No Appointments Upcoming"};
+                                ArrayAdapter<String> noAppointment = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, noApp);
+                                listView.setAdapter(noAppointment);
                             }
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -221,28 +223,28 @@ public class ProfileActivity extends AppCompatActivity {
             super(ProfileActivity.this, R.layout.layout_custom_listview, appDates);
             this.appDates = appDates;
         }
+
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = getLayoutInflater();
             View view = getLayoutInflater().inflate(R.layout.layout_custom_listview, null);
-            ImageView mImageView = (ImageView) view.findViewById(R.id.imageView);
+            final ImageView mImageView = (ImageView) view.findViewById(R.id.imageView);
             TextView mTextView = view.findViewById(R.id.textViewAppointmentDate);
 //            mTextView.setText(appDates.get(position));
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            final long HOUR = 3600*1000; // in milli-seconds.
+            final long HOUR = 3600 * 1000; // in milli-seconds.
             Date today = new Date();
-            Date plus2Day = new Date(today.getTime()+48*HOUR);
+            Date plus2Day = new Date(today.getTime() + 48 * HOUR);
 
 
             //showing the screening image if the date is within 48hrs of today
             try {
-                if(today.before(sdf.parse(appDates.get(position))) && plus2Day.after(sdf.parse(appDates.get(position)))) {
+                if (today.before(sdf.parse(appDates.get(position))) && plus2Day.after(sdf.parse(appDates.get(position)))) {
                     //code to show the screening icon if the date falls between the 48hr
                     mTextView.setText(appDates.get(position));
                     mImageView.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     mTextView.setText(appDates.get(position));
                     mImageView.setVisibility(View.GONE);
                 }
@@ -250,35 +252,107 @@ public class ProfileActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
-
-//***Test
-//        //checking whether a screening has been uploaded already
-//        for(int i = 0; i < appointmentList.size(); i++){
-//            for(int y = 0; y < screeningList.size(); y++){
-//                if(appointmentList.get(i).getId()==screeningList.get(y).getAppointmentid()){
-//                    Toast.makeText(ProfileActivity.this, "Screening already uploaded", Toast.LENGTH_SHORT).show();
-//                    mImageView.setColorFilter(Color.GREEN);
-//                    mImageView.setClickable(false);
-//                }
-
-
-            //when the the image for screening is clicked
-            mImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    for (int i = 0; i < appointmentList.size(); i++) {
-                        if (appointmentList.get(i).getAppdate() == appDates.get(position)) {
-                            String appointmentID = String.valueOf(appointmentList.get(i).getId());
-                            Intent intent = new Intent(ProfileActivity.this, PatientScreeningActivity.class);
-                            intent.putExtra("appID", appointmentID);
-                            startActivity(intent);
+            //***Test
+            //checking whether a screening has been uploaded already
+            for (int i = 0; i < appointmentList.size(); i++) {
+                for (int y = 0; y < screeningList.size(); y++) {
+                    if (appointmentList.get(i).getAppdate() == appDates.get(position)) {
+                        if (appointmentList.get(i).getId() == screeningList.get(y).getAppointmentid()) {
+                            mImageView.setColorFilter(Color.GREEN);
+                            mImageView.setClickable(false);
                         }
                     }
                 }
-            });
+            }
 
-            //***Test
+                    //when the the image for screening is clicked
+                    mImageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (mImageView.getColorFilter() == null) {
+                                for (int i = 0; i < appointmentList.size(); i++) {
+                                    if (appointmentList.get(i).getAppdate() == appDates.get(position)) {
+                                        String appointmentID = String.valueOf(appointmentList.get(i).getId());
+                                        Intent intent = new Intent(ProfileActivity.this, PatientScreeningActivity.class);
+                                        intent.putExtra("appID", appointmentID);
+                                        startActivity(intent);
+                                    }
+                                }
+                            }else{
+                                AlertDialog.Builder builder1 = new AlertDialog.Builder(ProfileActivity.this);
+                                        builder1.setTitle("Alert!");
+                                        builder1.setMessage("Screened already");
+                                        builder1.setCancelable(false);
+                                        builder1.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                            }
+                                        });
+
+                                        AlertDialog Alert1 = builder1.create();
+                                        Alert1.show();
+                            }
+                        }
+                    });
+
+
+                    //test
+                    //when the the image for screening is clicked
+//            mImageView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    for (int y = 0; y < screeningList.size(); y++) {
+//                        for (int i = 0; i < appointmentList.size(); i++) {
+//                            if (appointmentList.get(i).getId() == screeningList.get(y).getAppointmentid()) {
+//                                if (appointmentList.get(i).getAppdate() == appDates.get(position)) {
+//
+//                                    Intent intent = getIntent();
+//                                    finish();
+//                                    startActivity(intent);
+//                                    break;
+//                                }
+//                            } else {
+//                                if (appointmentList.get(i).getId() != screeningList.get(y).getAppointmentid()){
+//                                    if (appointmentList.get(i).getAppdate() == appDates.get(position)){
+//                                        String appointmentID = String.valueOf(appointmentList.get(i).getId());
+//                                        Intent intent = new Intent(ProfileActivity.this, PatientScreeningActivity.class);
+//                                        intent.putExtra("appID", appointmentID);
+//                                        startActivity(intent);
+//                                        break;
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            });
+
+                    //test
+//            mImageView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                        for (int i = 0; i < appointmentList.size(); i++) {
+//                            if (appointmentList.get(i).getAppdate().equals(appDates.get(position))) {
+//                                for (int y = 0; y < screeningList.size(); y++) {
+//                                    if (appointmentList.get(i).getId() == screeningList.get(y).getAppointmentid()) {
+//                                    Intent intent = getIntent();
+//                                    finish();
+////                                    startActivity(intent);
+////                                    break;
+//                                }else if (appointmentList.get(i).getId() != screeningList.get(y).getAppointmentid()){
+//                                        String appointmentID = String.valueOf(appointmentList.get(i).getId());
+//                                        Intent intent = new Intent(ProfileActivity.this, PatientScreeningActivity.class);
+//                                        intent.putExtra("appID", appointmentID);
+//                                        startActivity(intent);
+//                                        break;
+//                                }
+//                            }
+//                                break;
+//                        }
+//                    }
+//                }
+//            });
+                    //***Test
 //            mImageView.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -316,139 +390,140 @@ public class ProfileActivity extends AppCompatActivity {
 //            });
 
 
-            //resources
-            //https://stackoverflow.com/questions/883060/how-can-i-determine-if-a-date-is-between-two-dates-in-java
-            //https://stackoverflow.com/questions/7348150/android-why-setvisibilityview-gone-or-setvisibilityview-invisible-do-not
-            //https://stackoverflow.com/questions/3581258/adding-n-hours-to-a-date-in-java
-            return view;
-        }
-    }
-        private void getPatients() {
-            PerformNetworkRequest2 request = new PerformNetworkRequest2(Constants.URL_PATIENTS_RETRIEVE, null, CODE_GET_REQUEST);
-            request.execute();
-        }
-
-        private class PerformNetworkRequest2 extends AsyncTask<Void, Void, String> {
-
-            //the url where we need to send the request
-            String url;
-
-            //the parameters
-            HashMap<String, String> params;
-
-            //the request code to define whether it is a GET or POST
-            int requestCode;
-
-            //constructor to initialize values
-            PerformNetworkRequest2(String url, HashMap<String, String> params, int requestCode) {
-                this.url = url;
-                this.params = params;
-                this.requestCode = requestCode;
-            }
-
-            //when the task started displaying a progressbar
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-//            progressBar.setVisibility(View.VISIBLE);
-            }
-
-
-            //this method will give the response from the request
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-//            progressBar.setVisibility(View.INVISIBLE);
-                try {
-                    JSONObject object = new JSONObject(s);
-                    if (!object.getBoolean("error")) {
-                        Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
-
-                        refreshPatientList(object.getJSONArray("patients"));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    //resources
+                    //https://stackoverflow.com/questions/883060/how-can-i-determine-if-a-date-is-between-two-dates-in-java
+                    //https://stackoverflow.com/questions/7348150/android-why-setvisibilityview-gone-or-setvisibilityview-invisible-do-not
+                    //https://stackoverflow.com/questions/3581258/adding-n-hours-to-a-date-in-java
+                    return view;
                 }
             }
+    private void getPatients() {
+        PerformNetworkRequest2 request = new PerformNetworkRequest2(Constants.URL_PATIENTS_RETRIEVE, null, CODE_GET_REQUEST);
+        request.execute();
+    }
 
-            //the network operation will be performed in background
-            @Override
-            protected String doInBackground(Void... voids) {
-                PatientRequestHandler requestHandler = new PatientRequestHandler();
+    private class PerformNetworkRequest2 extends AsyncTask<Void, Void, String> {
 
-                if (requestCode == CODE_POST_REQUEST)
-                    return requestHandler.sendPostRequest(url, params);
+        //the url where we need to send the request
+        String url;
 
+        //the parameters
+        HashMap<String, String> params;
 
-                if (requestCode == CODE_GET_REQUEST)
-                    return requestHandler.sendGetRequest(url);
+        //the request code to define whether it is a GET or POST
+        int requestCode;
 
-                return null;
-            }
+        //constructor to initialize values
+        PerformNetworkRequest2(String url, HashMap<String, String> params, int requestCode) {
+            this.url = url;
+            this.params = params;
+            this.requestCode = requestCode;
         }
 
-        private void refreshPatientList(JSONArray patients) throws JSONException {
-            //clearing previous patients
-            patientList.clear();
-
-            //traversing through all the items in the json array
-            //the json we got from the response
-            for (int i = 0; i < patients.length(); i++) {
-                //getting each patient object
-                JSONObject obj = patients.getJSONObject(i);
-
-                //adding the patient to the list
-                patientList.add(new Patient(
-                        obj.getInt("id"),
-                        obj.getInt("userid"),
-                        obj.getString("fname"),
-                        obj.getString("lname"),
-                        obj.getString("street"),
-                        obj.getString("city"),
-                        obj.getString("zip"),
-                        obj.getString("phone"),
-                        obj.getString("prsi")
-                ));
-            }
-        }
-
-
-        //override method for logout
+        //when the task started displaying a progressbar
         @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            //code to include menu item
-            getMenuInflater().inflate(R.menu.menu, menu);
-            return true;
+        protected void onPreExecute() {
+            super.onPreExecute();
+//            progressBar.setVisibility(View.VISIBLE);
         }
 
-        //this method is for when the logout oprion is selected from the menu
-        //the method will log you out
+
+        //this method will give the response from the request
         @Override
-        public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.menuLogout: // this take the menu id from the menu.xml
-                    SharedPrefManager.getInstance(this).logout();//this calls the logout method created in shared preference manager
-                    finish();
-                    startActivity(new Intent(this, LoginActivity.class));//when logged out it will start the LoginActivity
-                    break;
-                case R.id.menuUpload:
-//            Toast.makeText(this,"You clicked settings", Toast.LENGTH_LONG).show();
-                    finish();
-                    startActivity(new Intent(this, medicalActivity.class));
-                    break;
-                case R.id.menuUpdate:
-//            Toast.makeText(this,"You clicked settings", Toast.LENGTH_LONG).show();
-                    finish();
-                    startActivity(new Intent(this, UpdateMedical.class));
-                    break;
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+//            progressBar.setVisibility(View.INVISIBLE);
+            try {
+                JSONObject object = new JSONObject(s);
+                if (!object.getBoolean("error")) {
+                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+
+                    refreshPatientList(object.getJSONArray("patients"));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-            return true;
         }
 
-        private void getScreenings(){
-            PerformNetworkRequest3 request = new PerformNetworkRequest3(Constants.URL_RETRIEVE_SCREENING, null, CODE_GET_REQUEST);
-            request.execute();
+        //the network operation will be performed in background
+        @Override
+        protected String doInBackground(Void... voids) {
+            PatientRequestHandler requestHandler = new PatientRequestHandler();
+
+            if (requestCode == CODE_POST_REQUEST)
+                return requestHandler.sendPostRequest(url, params);
+
+
+            if (requestCode == CODE_GET_REQUEST)
+                return requestHandler.sendGetRequest(url);
+
+            return null;
         }
+    }
+
+    private void refreshPatientList(JSONArray patients) throws JSONException {
+        //clearing previous patients
+        patientList.clear();
+
+        //traversing through all the items in the json array
+        //the json we got from the response
+        for (int i = 0; i < patients.length(); i++) {
+            //getting each patient object
+            JSONObject obj = patients.getJSONObject(i);
+
+            //adding the patient to the list
+            patientList.add(new Patient(
+                    obj.getInt("id"),
+                    obj.getInt("userid"),
+                    obj.getString("fname"),
+                    obj.getString("lname"),
+                    obj.getString("street"),
+                    obj.getString("city"),
+                    obj.getString("zip"),
+                    obj.getString("phone"),
+                    obj.getString("prsi")
+            ));
+        }
+    }
+
+
+    //override method for logout
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //code to include menu item
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    //this method is for when the logout oprion is selected from the menu
+    //the method will log you out
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuLogout: // this take the menu id from the menu.xml
+                SharedPrefManager.getInstance(this).logout();//this calls the logout method created in shared preference manager
+                finish();
+                startActivity(new Intent(this, LoginActivity.class));//when logged out it will start the LoginActivity
+                break;
+            case R.id.menuUpload:
+//            Toast.makeText(this,"You clicked settings", Toast.LENGTH_LONG).show();
+                finish();
+                startActivity(new Intent(this, medicalActivity.class));
+                break;
+            case R.id.menuUpdate:
+//            Toast.makeText(this,"You clicked settings", Toast.LENGTH_LONG).show();
+                finish();
+                startActivity(new Intent(this, UpdateMedical.class));
+                break;
+        }
+        return true;
+    }
+
+    private void getScreenings() {
+        PerformNetworkRequest3 request = new PerformNetworkRequest3(Constants.URL_RETRIEVE_SCREENING, null, CODE_GET_REQUEST);
+        request.execute();
+    }
+
     private class PerformNetworkRequest3 extends AsyncTask<Void, Void, String> {
 
         //the url where we need to send the request
@@ -506,6 +581,7 @@ public class ProfileActivity extends AppCompatActivity {
             return null;
         }
     }
+
     private void refreshScreeningList(JSONArray screenings) throws JSONException {
         //clearing previous patients
         screeningList.clear();
@@ -531,4 +607,4 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     }
-    }
+}

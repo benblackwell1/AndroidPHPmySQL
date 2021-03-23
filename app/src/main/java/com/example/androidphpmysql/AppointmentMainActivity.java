@@ -41,9 +41,6 @@ public class AppointmentMainActivity extends AppCompatActivity implements View.O
     private ArrayList appDates = new ArrayList<>();
 
     List<Patient> patientList;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

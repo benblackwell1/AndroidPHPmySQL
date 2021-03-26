@@ -3,6 +3,7 @@ package com.example.androidphpmysql;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -149,7 +150,7 @@ public class AdminWaitingRoomActivity extends AppCompatActivity {
         public View getView(final int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = getLayoutInflater();
             View listViewItem = inflater.inflate(R.layout.layout_waiting_room, null, true);
-
+            listViewItem.setBackgroundColor(Color.WHITE);
             //getting textview for displaying the timestamp of the medical record
             TextView textViewWaitingRoom = listViewItem.findViewById(R.id.textViewWaitingRoom);
             TextView textViewWaitingRoomName = listViewItem.findViewById(R.id.textViewWaitingRoomName);
@@ -278,7 +279,6 @@ public class AdminWaitingRoomActivity extends AppCompatActivity {
                     JSONObject obj = new JSONObject(response);
                     if (!obj.getBoolean("error")) {
                         Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-                        finish();
                         startActivity(getIntent());
                     }
                 } catch (JSONException e) {

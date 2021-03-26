@@ -5,7 +5,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/newbg"
     tools:context=".PatientScreeningActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Covid-19 Screening"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:layout_marginTop="15dp"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="6dp"
+        app:cardCornerRadius="12dp"
+        android:layout_margin="12dp"
+        android:layout_centerInParent="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll1"
+        android:orientation="vertical">
+
 <LinearLayout
     android:id="@+id/covidQ1"
     android:layout_width="match_parent"
@@ -31,7 +57,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Do you have a confirmed diagnosis of Covid-19?"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textColor="#696969"/>
 </LinearLayout>
 
     <LinearLayout
@@ -60,7 +87,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Are you waiting for a Covid-19 test or test result?"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="#696969"/>
     </LinearLayout>
 
     <LinearLayout
@@ -89,7 +117,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Have you travelled internationally in the last 14 days?"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="#696969"/>
     </LinearLayout>
 
     <LinearLayout
@@ -119,7 +148,8 @@
             android:layout_height="wrap_content"
             android:text="Have you had contact with someone with a confirmed diagnosis of Covid-19, or been in isolation with a suspected case in the last 14 days?"
             android:textStyle="bold"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="5dp"
+            android:textColor="#696969"/>
     </LinearLayout>
 
     <LinearLayout
@@ -150,7 +180,8 @@
             android:layout_height="wrap_content"
             android:text="Has someone in your household been diaganosed with Covid-19 or is awaiting a test or the results of a test within the last 14 days?"
             android:textStyle="bold"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="5dp"
+            android:textColor="#696969"/>
     </LinearLayout>
 
     <LinearLayout
@@ -181,7 +212,8 @@
             android:layout_height="wrap_content"
             android:text="Do you have any of the following symptoms?"
             android:textStyle="bold"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="5dp"
+            android:textColor="#696969"/>
 
     </LinearLayout>
 
@@ -203,7 +235,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="A high temperature - this means you feel hot to touch on your chest or back (you do not need to measure your temperature)"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#696969"/>
     </LinearLayout>
 
     <LinearLayout
@@ -224,7 +257,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="A new continuos cough - this means coughing a lot for more than an hour, or 3 or more coughing episodes in 24 hours (if you usually have a cough, it may be worse than usual)"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#696969"/>
     </LinearLayout>
 
     <LinearLayout
@@ -245,7 +279,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="A loss or change to your sense of smell or taste - this means you've noticied you cannot smell or taste anything, or things smell or taste different to normal"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#696969"/>
     </LinearLayout>
 
     <LinearLayout
@@ -268,7 +303,8 @@
             android:layout_height="wrap_content"
             android:text="By checking this box, you agree that the information you have provided is true."
             android:textStyle="bold|italic"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:textColor="#696969"/>
     </LinearLayout>
 
     <LinearLayout
@@ -283,5 +319,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Submit" />
+
     </LinearLayout>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>

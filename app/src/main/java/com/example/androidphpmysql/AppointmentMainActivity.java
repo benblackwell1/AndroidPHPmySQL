@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -165,8 +166,12 @@ public class AppointmentMainActivity extends AppCompatActivity implements View.O
         //creating the adapter and setting it to the listview
         //AppointmentAdapter adapter = new AppointmentAdapter(appDates);
         //listView.setAdapter(adapter);
+
         ArrayAdapter<String> adapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, appDates);
         listView.setAdapter(adapter);
+        listView.setBackgroundColor(Color.WHITE);
+
+
 
         //comparing the dates to the current date
         // https://stackoverflow.com/questions/37734063/how-to-compare-datetime-in-android/37734446
@@ -176,7 +181,6 @@ public class AppointmentMainActivity extends AppCompatActivity implements View.O
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 String app = parent.getItemAtPosition(position).toString();
                 for(int i = 0; i < appointmentList.size(); i++) {
                     for (int y = 0; y < patientList.size(); y++) {
@@ -299,10 +303,13 @@ public class AppointmentMainActivity extends AppCompatActivity implements View.O
 
     @Override
     public void onClick(View view){
-        if(view == buttonAddAppointment)
+        if(view == buttonAddAppointment) {
+            finish();
             startActivity(new Intent(this, CreateAppointmentActivity.class));
-        if(view == buttonAppointmentHistory)
+        }
+        if(view == buttonAppointmentHistory) {
             startActivity(new Intent(this, AppointmentHistoryActivity.class));
+        }
     }
 
 }

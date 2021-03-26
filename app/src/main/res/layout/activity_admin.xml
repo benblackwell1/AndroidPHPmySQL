@@ -4,27 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/newbg"
     tools:context=".AdminActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:orientation="vertical"
         android:padding="16dp">
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:text="Current Patients"
-    android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Current Patients"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            />
 
         <ListView
             android:id="@+id/listViewPatients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below = "@id/linearLayout"/>
+            android:layout_below="@id/linearLayout" />
     </LinearLayout>
 
 </RelativeLayout>

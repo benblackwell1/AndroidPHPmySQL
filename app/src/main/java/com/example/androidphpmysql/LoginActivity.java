@@ -29,6 +29,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button buttonLogin;
     private ProgressDialog progressDialog;
     private TextView textViewRegister;
+    private TextView textViewAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
         textViewRegister = (TextView) findViewById(R.id.textViewRegister);
+        textViewAdmin = (TextView) findViewById(R.id.textViewAdmin);
 
 
         progressDialog = new ProgressDialog(this);
@@ -53,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         buttonLogin.setOnClickListener(this);
         textViewRegister.setOnClickListener(this);
+        textViewAdmin.setOnClickListener(this);
 
     }
     private void userLogin(){
@@ -78,8 +81,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                 obj.getString("username"),
                                                 obj.getString("email")
                                         );
-                                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-                                finish();
+                                    startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                                    finish();
                             }else{
                                 Toast.makeText(
                                         getApplicationContext(),
@@ -120,7 +123,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(view == buttonLogin){
             userLogin();
         }
-        if(view == textViewRegister)
+        if(view == textViewRegister) {
             startActivity(new Intent(this, MainActivity.class));
+        }
+        if(view == textViewAdmin) {
+            startActivity(new Intent(this, AdminLoginActivity.class));
+            finish();
+        }
     }
 }

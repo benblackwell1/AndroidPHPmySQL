@@ -4,58 +4,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/newbg"
     tools:context=".ProfileActivity">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:id="@+id/linearLayout1"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <TextView
-            android:text="USER NAME"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:id="@+id/tvUSERNAME"
+            android:text="USER NAME: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textColor="#ffffff"
+            android:layout_alignBaseline="@+id/textViewUsername"/>
         <TextView
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:id="@+id/textViewUsername"
+            android:layout_toRightOf="@+id/tvUSERNAME"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:text="USER NAME"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
+            android:textColor="#ffffff"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
         <TextView
-            android:text="USER EMAIL"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_below="@+id/tvUSERNAME"
+            android:id="@+id/tvUSEREMAIL"
+            android:text="USER EMAIL: "
+            android:textColor="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewUserEmail"/>
         <TextView
+            android:layout_below="@+id/tvUSERNAME"
+            android:layout_toRightOf="@+id/tvUSERNAME"
+            android:layout_marginLeft="10dp"
+            android:textColor="#ffffff"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:id="@+id/textViewUserEmail"
             android:text="USER EMAIL"
-            android:layout_width="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <Button
+            android:layout_below="@+id/tvUSEREMAIL"
+            android:layout_marginTop="20dp"
+            android:layout_centerInParent="true"
             android:id="@+id/btnWaitingRoom"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Enter waiting room"/>
-    </LinearLayout>
+    </RelativeLayout>
+
     <LinearLayout
-        android:layout_centerVertical="true"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout1">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_marginTop="20dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Upcoming Appointments"
-            android:textStyle="bold"/>
-
-        <ListView
-            android:id="@+id/listViewPatientAppointments"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Upcoming Appointments"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:textAlignment="center"/>
+            <ListView
+                android:layout_marginTop="10dp"
+                android:id="@+id/listViewPatientAppointments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            </LinearLayout>
     </LinearLayout>
-
 </RelativeLayout>

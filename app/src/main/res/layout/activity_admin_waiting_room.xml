@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/newbg"
     tools:context=".AdminWaitingRoomActivity">
 
     <LinearLayout
@@ -15,7 +16,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Patients waiting to enter"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            android:textAlignment="center"/>
 
         <ListView
             android:id="@+id/listViewWaitingRoom"

@@ -4,7 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/newbg"
     tools:context=".CreateAppointmentActivity">
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Create Appointment"
+    android:textColor="#ffffff"
+    android:textSize="30sp"
+    android:textAlignment="center"
+    android:layout_marginTop="75dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll1"
+        android:orientation="vertical"
+        android:layout_marginTop="200dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardElevation="6dp"
+        app:cardCornerRadius="12dp"
+        android:layout_margin="12dp">
 <LinearLayout
     android:id="@+id/linearLayout"
     android:orientation="vertical"
@@ -14,10 +36,13 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
         <TextView
             android:text="Patient Name:"
+            android:textStyle="bold"
+            android:textSize="20sp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"/>
@@ -56,7 +81,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
 
         <EditText
@@ -70,34 +96,36 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:padding="16dp"/>
 
     <TextView
-        android:text="Appointment for:"
+        android:text="Appointment Description:"
+        android:textStyle="bold"
+        android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.25"/>
+        android:layout_weight="0.25"
+        android:padding="16dp"/>
 
         <EditText
             android:id="@+id/editAppointmentFor"
             android:hint=""
             android:inputType="textMultiLine"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
+            android:layout_height="wrap_content"
+            android:padding="16dp"/>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout">
 
     <Button
         android:id="@+id/buttonCreateAppointment"
         android:text="Create Appointment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    </LinearLayout>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll1"
+        android:layout_centerInParent="true"/>
 
 </RelativeLayout>

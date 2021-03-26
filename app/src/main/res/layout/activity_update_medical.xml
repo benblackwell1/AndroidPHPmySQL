@@ -4,13 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/newbg"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
     tools:context=".UpdateMedical">
 
-
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Medical Information"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        />
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="6dp"
+        app:cardCornerRadius="12dp"
+        android:layout_margin="12dp"
+        android:layout_centerInParent="true">
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll1"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_marginTop="5dp"
         android:id="@+id/linearLayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -21,7 +44,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:text="Patient ID"
+            android:textStyle="bold"
+            android:layout_marginLeft="5dp"
+            android:text="Patient ID:"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"/>
@@ -38,7 +63,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:text="Gender"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:text="Gender:"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"/>
@@ -55,7 +82,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:text="Date of Birth"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:text="Date of Birth:"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"/>
@@ -72,7 +101,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:text="Weight"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:text="Weight:"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"/>
@@ -90,7 +121,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:text="Alcohol"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:text="Alcohol:"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"/>
@@ -108,7 +141,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:text="Smoking"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:text="Smoking:"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"/>
@@ -126,14 +161,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:text="Underlying Conditions "
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:text="Underlying Conditions:"
                 android:layout_width="0dp"
+                android:layout_marginTop="-12dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"/>
             <EditText
                 android:id="@+id/editUnderlyingConditionsUpdate"
-                android:inputType="textMultiLine"
-                android:lines="4"
                 android:hint="Underlying Conditions"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -147,14 +183,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:text="Allergies"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:text="Allergies:"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"/>
             <EditText
                 android:id="@+id/editAllergiesUpdate"
-                android:inputType="textMultiLine"
-                android:lines="4"
                 android:hint="Allergies"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -168,14 +204,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:text="Medication"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:text="Medication:"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"/>
             <EditText
                 android:id="@+id/editMedicationUpdate"
-                android:inputType="textMultiLine"
-                android:lines="4"
                 android:hint="Medication"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -187,9 +223,11 @@
         <Button
             android:text="Update"
             android:id="@+id/buttonUpdate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>

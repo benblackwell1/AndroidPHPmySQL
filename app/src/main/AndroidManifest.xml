@@ -7,16 +7,21 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Smyle Assistant"
+        android:label="SMYLE ASSISTANT"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CompleteRegistrationActivity"></activity>
-        <activity android:name=".AdminScreeningActivity" />
-        <activity android:name=".BarChartActivity" />
-        <activity android:name=".AdminWaitingRoomActivity" />
-        <activity android:name=".WaitingRoomActivity" />
+        <activity android:name=".AdminLoginActivity"></activity>
+        <activity android:name=".CompleteRegistrationActivity" />
+        <activity android:name=".AdminScreeningActivity"
+            android:parentActivityName=".AdminSwitchboardActivity"/>
+        <activity android:name=".BarChartActivity"
+            android:parentActivityName=".AdminSwitchboardActivity"/>
+        <activity android:name=".AdminWaitingRoomActivity"
+            android:parentActivityName=".AdminSwitchboardActivity"/>
+        <activity android:name=".WaitingRoomActivity"
+            android:parentActivityName=".ProfileActivity"/>
         <activity android:name=".PatientScreeningActivity" />
         <activity
             android:name=".AppointmentHistoryActivity"
@@ -40,8 +45,8 @@
         <activity android:name=".UpdateMedical" />
         <activity android:name=".medicalActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

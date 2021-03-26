@@ -58,7 +58,8 @@ public class BarChartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bar_chart);
-
+        //back button code
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //gathering the appointments
         appointmentList = new ArrayList<>();
         //get appointment list
@@ -72,7 +73,7 @@ public class BarChartActivity extends AppCompatActivity {
 
 
             // creating a new bar data set.
-            barDataSet = new BarDataSet(barEntriesArrayList, "Appointments per month");
+            barDataSet = new BarDataSet(barEntriesArrayList, "Appointments per week");
             final ArrayList<String> labels = new ArrayList<String>();
             labels.add("January");
             labels.add("February");
@@ -96,6 +97,7 @@ public class BarChartActivity extends AppCompatActivity {
             // setting text size
             barDataSet.setValueTextSize(16f);
             barChart.getDescription().setEnabled(false);
+            barChart.setBackgroundColor(Color.WHITE);
         }
         
     private void getBarEntries() {

@@ -72,9 +72,10 @@ public class WaitingRoomActivity extends AppCompatActivity {
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
-
+        //back button code
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         loadIntoWaitingRoom();
-        getAllWaitingRoom();
+//        getAllWaitingRoom();
     }
 
 
@@ -182,9 +183,13 @@ public class WaitingRoomActivity extends AppCompatActivity {
         //clearing previous patients
         waitingRoomList.clear();
 
-        //traversing through all the items in the json array
-        //the json we got from the response
-        for (int i = 0; i < names.length(); i++) {
+
+        if (names.length() == 0) {
+            shownotification();
+        } else {
+            //traversing through all the items in the json array
+            //the json we got from the response
+            for (int i = 0; i < names.length(); i++) {
                 //getting each patient object
                 JSONObject obj = names.getJSONObject(i);
 
@@ -195,40 +200,48 @@ public class WaitingRoomActivity extends AppCompatActivity {
                         obj.getString("timestamp")
                 ));
 
-        }
+            }
 
+        }
     }
 
     private void checkDeletion() {
         getAllWaitingRoom();
-        for (int i = 0; i < waitingRoomList.size(); i++)
-            if(waitingRoomList.get(i).getUserid()!=SharedPrefManager.getInstance(this).getUserId() || waitingRoomList.isEmpty()||waitingRoomList.size() == 0){
-                Toast.makeText(getApplicationContext(), "Please enter the surgery", Toast.LENGTH_SHORT).show();
-                new AlertDialog.Builder(WaitingRoomActivity.this)
-                        .setTitle("Enter Surgery")
-                        .setMessage("Please enter the surgery, the dentist is ready to see you.")
-                        .setCancelable(false)
-                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                                startActivity(new Intent(WaitingRoomActivity.this, ProfileActivity.class));
-                            }
-                        }).show();
-                //notification to indicate to enter the surgery
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(WaitingRoomActivity.this, "Enter Surgery");
-                builder.setContentTitle("Enter the surgery");
-                builder.setContentText("Please enter the surgery. The dentist is ready to see you.");
-                builder.setSmallIcon(R.drawable.ic_launcher_background);
-                builder.setAutoCancel(true);
-
-                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(WaitingRoomActivity.this);
-                managerCompat.notify(1,builder.build());
-
-            }else{
+    //checking if the arraylist is empty
+    for (int i = 0; i < waitingRoomList.size(); i++) {
+            if (!String.valueOf(waitingRoomList.get(i).getUserid()).equals(String.valueOf(SharedPrefManager.getInstance(this).getUserId()))) {
+                shownotification();
+            } else if (waitingRoomList.contains(null)){
+                shownotification();
+            } else if (String.valueOf(waitingRoomList.get(i).getUserid()).equals(String.valueOf(SharedPrefManager.getInstance(this).getUserId()))) {
                 Toast.makeText(getApplicationContext(), "Still waiting", Toast.LENGTH_SHORT).show();
             }
         }
     }
+    private void shownotification() {
+        Toast.makeText(getApplicationContext(), "Please enter the surgery", Toast.LENGTH_SHORT).show();
+        new AlertDialog.Builder(WaitingRoomActivity.this)
+                .setTitle("Enter Surgery")
+                .setMessage("Please enter the surgery, the dentist is ready to see you.")
+                .setCancelable(false)
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        startActivity(new Intent(WaitingRoomActivity.this, ProfileActivity.class));
+                    }
+                }).show();
+        //notification to indicate to enter the surgery
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(WaitingRoomActivity.this, "Enter Surgery");
+        builder.setContentTitle("Enter the surgery");
+        builder.setContentText("Please enter the surgery. The dentist is ready to see you.");
+        builder.setSmallIcon(R.drawable.ic_launcher_background);
+        builder.setAutoCancel(true);
+
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(WaitingRoomActivity.this);
+        managerCompat.notify(1,builder.build());
+    }
+
+}
 
 

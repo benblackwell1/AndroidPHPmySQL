@@ -317,6 +317,7 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
     private void AppointmentCreated(){
         //go back to the appointment main page
         startActivity(new Intent(this, AppointmentMainActivity.class));
+        finish();
     }
 }
 

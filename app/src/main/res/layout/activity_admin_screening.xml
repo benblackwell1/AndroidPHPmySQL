@@ -4,14 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/newbg"
     tools:context=".AdminScreeningActivity">
+
+
 <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="Screenings received from patients prior to their appointments"
+    android:textColor="#ffffff"
+    android:textSize="22sp"
     android:textStyle="bold"
-    android:layout_marginTop="10dp"
-    android:layout_marginLeft="10dp"
+android:textAlignment="center"
     android:id="@+id/textViewText"/>
 
     <ListView

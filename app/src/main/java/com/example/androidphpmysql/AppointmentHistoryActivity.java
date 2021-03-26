@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -161,6 +162,7 @@ public class AppointmentHistoryActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, appDates);
         listView.setAdapter(adapter);
+        listView.setBackgroundColor(Color.WHITE);
 
         //comparing the dates to the current date
         // https://stackoverflow.com/questions/37734063/how-to-compare-datetime-in-android/37734446

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -82,7 +83,7 @@ public class AdminActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = getLayoutInflater();
             View listViewItem = inflater.inflate(R.layout.layout_patient_list, null, true);
-
+            listViewItem.setBackgroundColor(Color.WHITE);
             //getting textview for displaying name
             TextView textViewName = listViewItem.findViewById(R.id.textViewName);
 

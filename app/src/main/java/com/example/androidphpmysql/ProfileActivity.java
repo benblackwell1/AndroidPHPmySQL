@@ -83,7 +83,6 @@ public class ProfileActivity extends AppCompatActivity {
         btnWaitingRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
                 startActivity(new Intent(ProfileActivity.this, WaitingRoomActivity.class));
             }
         });
@@ -228,6 +227,7 @@ public class ProfileActivity extends AppCompatActivity {
         public View getView(final int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = getLayoutInflater();
             View view = getLayoutInflater().inflate(R.layout.layout_custom_listview, null);
+            view.setBackgroundColor(Color.WHITE);
             final ImageView mImageView = (ImageView) view.findViewById(R.id.imageView);
             TextView mTextView = view.findViewById(R.id.textViewAppointmentDate);
 //            mTextView.setText(appDates.get(position));

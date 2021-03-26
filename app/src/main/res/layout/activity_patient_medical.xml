@@ -4,94 +4,117 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/newbg"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
     tools:context=".PatientMedicalActivity">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="match_parent"
+        app:cardElevation="6dp"
+        app:cardCornerRadius="12dp"
+        android:layout_margin="12dp"
+        android:layout_centerInParent="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ll1"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:id="@+id/linearLayouty"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp">
     <TextView
         android:text="USER ID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textStyle="bold"/>
     <TextView
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:id="@+id/textViewUserID"
         android:text="USER ID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
 
         <TextView
             android:text="Name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textStyle="bold"/>
         <TextView
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:id="@+id/textViewName"
             android:text="NAME"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
 
         <TextView
             android:text="Address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textStyle="bold"/>
         <TextView
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:id="@+id/textViewAddress"
             android:text="Address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="vertical">
 
         <TextView
             android:text="Medicals"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
 
         <ListView
             android:id="@+id/listViewPatients"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="140dp"
             android:layout_below = "@id/linearLayout"/>
         </LinearLayout>
 
 
-
         <LinearLayout
             android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_below = "@id/linearLayout"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/linearLayout"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/buttonAddComment"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add Comment"/>
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:text="Add Comment" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:text="Dentist Comments"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
 
             <ListView
                 android:id="@+id/listViewComments"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below = "@id/linearLayout2"/>
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_below="@id/linearLayout2" />
         </LinearLayout>
-
+        </LinearLayout>
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>

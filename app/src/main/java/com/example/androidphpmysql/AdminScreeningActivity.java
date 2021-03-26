@@ -3,6 +3,7 @@ package com.example.androidphpmysql;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -34,7 +35,8 @@ public class AdminScreeningActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_screening);
-
+        //back button code
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         listView = (ListView) findViewById(R.id.listViewScreenings);
 
         screeningList = new ArrayList<>();
@@ -43,6 +45,7 @@ public class AdminScreeningActivity extends AppCompatActivity {
         getPatients();
         getAppointments();
         getScreenings();
+
     }
 
     private void getPatients() {
@@ -316,7 +319,7 @@ public class AdminScreeningActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = getLayoutInflater();
             View listViewItem = inflater.inflate(R.layout.custom_screening_listview, null, true);
-
+            listViewItem.setBackgroundColor(Color.WHITE);
             //getting textview for displaying name
             TextView textViewName = listViewItem.findViewById(R.id.textViewName);
             TextView textViewScreeningDate = listViewItem.findViewById(R.id.textViewScreeningDate);
